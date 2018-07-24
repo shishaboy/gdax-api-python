@@ -9,10 +9,13 @@ from gdax.public_client import PublicClient
 class PrivateClient(PublicClient):
     """Authenticated client for accessing GDAX accounts. requires passphrase,
     key, and b64secret key to access your accounts.
+    
+    #https://public.sandbox.pro.coinbase.com
+    #https://api.pro.coinbase.com
     """
 
     def __init__(self, key, b64secret, passphrase,
-                 api_url="https://api.pro.coinbase.com", timeout=30):
+                 api_url="https://public.sandbox.pro.coinbase.comm", timeout=30): 
         self.url = api_url.rstrip('/')
         self.timeout = timeout
         self.auth = CoinbaseExchangeAuth(key, b64secret, passphrase)
