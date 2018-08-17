@@ -3,8 +3,7 @@ import hashlib
 import hmac
 import time
 from requests.auth import AuthBase
-import json
-import requests
+
 
 class CoinbaseExchangeAuth(AuthBase):
     """Authentication for Coinbase & GDAX exchange.
