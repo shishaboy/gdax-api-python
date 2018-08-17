@@ -3,20 +3,29 @@ import hashlib
 import hmac
 import time
 from requests.auth import AuthBase
-
+import json
+import requests
 
 class CoinbaseExchangeAuth(AuthBase):
     """Authentication for Coinbase & GDAX exchange.
     from https://docs.gdax.com/?python#signing-a-message
     """
-
+    def gettime():
+        try:
+            url='https://api.pro.coinbase.com/time'
+            res = requests.get(url) 
+            json_res = json.loads(res.text) 
+            return json_res['epoch']
+        except: 
+            return time.time()
+        
     def __init__(self, api_key, secret_key, passphrase):
         self.api_key = api_key
         self.secret_key = secret_key
         self.passphrase = passphrase
 
     def __call__(self, request):
-        timestamp = str(time.time())
+        timestamp = str(gettime()) #str(time.time())
         message = timestamp + request.method + request.path_url + (request.body or '')
         request.headers.update(get_auth_headers(timestamp, message, self.api_key, self.secret_key,
                                                 self.passphrase))
