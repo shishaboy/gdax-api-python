@@ -29,9 +29,9 @@ class CoinbaseExchangeAuth(AuthBase):
             url='https://api.pro.coinbase.com/time'
             res = requests.get(url) 
             json_res = json.loads(res.text) 
-            timestamp= string(json_res['epoch'])
+            timestamp= str(json_res['epoch'])
         except: 
-            timestamp= string(time.time())
+            timestamp= str(time.time())
         #timestamp = str(gettime()) #str(time.time())
         message = timestamp + request.method + request.path_url + (request.body or '')
         request.headers.update(get_auth_headers(timestamp, message, self.api_key, self.secret_key,
