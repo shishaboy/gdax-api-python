@@ -15,7 +15,7 @@ class PrivateClient(PublicClient):
     """
 
     def __init__(self, key, b64secret, passphrase,
-                 api_url="https://public.sandbox.pro.coinbase.com", timeout=30): 
+                 api_url="https://api.pro.coinbase.com", timeout=30): 
         self.url = api_url.rstrip('/')
         self.timeout = timeout
         self.auth = CoinbaseExchangeAuth(key, b64secret, passphrase)
