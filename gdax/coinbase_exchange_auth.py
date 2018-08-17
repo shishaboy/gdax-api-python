@@ -8,28 +8,20 @@ from requests.auth import AuthBase
 class CoinbaseExchangeAuth(AuthBase):
     """Authentication for Coinbase & GDAX exchange.
     from https://docs.gdax.com/?python#signing-a-message
-    def gettime():
-        try:
-            url='https://api.pro.coinbase.com/time'
-            res = requests.get(url) 
-            json_res = json.loads(res.text) 
-            timestamp= string(json_res['epoch'])
-        except: 
-            timestamp= string(time.time())
     """
-        
+
     def __init__(self, api_key, secret_key, passphrase):
         self.api_key = api_key
         self.secret_key = secret_key
         self.passphrase = passphrase
 
-    
     def __call__(self, request):
         timestamp = str(time.time())
         message = timestamp + request.method + request.path_url + (request.body or '')
         request.headers.update(get_auth_headers(timestamp, message, self.api_key, self.secret_key,
                                                 self.passphrase))
         return request
+
 
 def get_auth_headers(timestamp, message, api_key, secret_key, passphrase):
     message = message.encode('ascii')
